@@ -1,4 +1,4 @@
-name: Deploy hajimi to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -22,12 +22,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Extract production build
+      - name: Setup site
         run: |
           mkdir -p site
-          unzip -q blockly-web-builder-gpt-dist.zip -d site
-          test -f site/dist/index.html
-          cp -R site/dist/. site/
+          cp index.html site/
+          cp blockly-web-builder-demo-v0.1.0.zip site/
+          cp blockly-web-builder-release-v0.1.0.zip site/
+          cp README.md site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
